@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
     end
 
     def destroy
-        category = Category.find!(params[:id])
+        category = Category.find(params[:id])
         category.destroy
         render header: :not_found
     end

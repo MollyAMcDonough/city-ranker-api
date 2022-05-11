@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :user_cities
   resources :categories
+  resources :cities, only: [:create, :update]
+  
   get '/cities/search', to: 'cities#search'
   
   # Routing logic: fallback requests for React Router.

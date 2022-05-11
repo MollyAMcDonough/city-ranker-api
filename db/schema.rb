@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_02_211401) do
+ActiveRecord::Schema.define(version: 2022_05_11_000408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2022_05_02_211401) do
     t.string "wikidata_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "airport"
   end
 
   create_table "user_cities", force: :cascade do |t|
@@ -51,6 +52,9 @@ ActiveRecord::Schema.define(version: 2022_05_02_211401) do
     t.bigint "category_id", null: false
     t.bigint "city_id", null: false
     t.text "note"
+    t.float "distance_from"
+    t.integer "postalcode"
+    t.string "city"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_user_cities_on_category_id"
