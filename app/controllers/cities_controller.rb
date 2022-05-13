@@ -24,10 +24,10 @@ class CitiesController < ApplicationController
         search_params.each do |key, value|
             @cities = @cities.public_send("filter_by_#{key}", value) if value.present?
         end
-        if params.key?(:max_distance)
-            @cities = @cities.filter {|city| city.within_rad(params[:latitude].to_f, params[:longitude].to_f, params[:max_distance].to_i)}
+        if params.key?(:distance)
+            @cities = @cities.filter {|city| city.within_rad(params[:latitude].to_f, params[:longitude].to_f, params[:distance].to_i)}
         end
-        render json: @cities, status: :ok
+        render json: @cities, lat_given: params[:latitude].to_f, long_given: params[:longitude].to_f, status: :ok
     end
 
     private

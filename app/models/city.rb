@@ -10,12 +10,12 @@ class City < ApplicationRecord
     scope :filter_by_monthly_internet, -> (internet_max) { where monthly_internet: ..internet_max }
     scope :filter_by_monthly_utilities, -> (utilities_max) { where monthly_utilities: ..utilities_max }
 
-    def within_rad (lat_given, lon_given, distance)
+    def within_rad(lat_given, lon_given, distance)
         d = get_distance_between_lat_lon(lat_given, lon_given)
         distance-d>=0
     end
 
-    def get_distance_between_lat_lon (lat_given, lon_given)
+    def get_distance_between_lat_lon(lat_given, lon_given)
         lat_city = self.latitude
         lon_city = self.longitude
         r_miles = 3963

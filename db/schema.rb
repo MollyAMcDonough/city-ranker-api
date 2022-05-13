@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_11_173331) do
+ActiveRecord::Schema.define(version: 2022_05_13_200625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,18 @@ ActiveRecord::Schema.define(version: 2022_05_11_173331) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "airport"
     t.boolean "coastal"
+  end
+
+  create_table "regions", force: :cascade do |t|
+    t.string "name"
+    t.string "country"
+    t.string "political_party"
+    t.float "tax_min"
+    t.float "tax_max"
+    t.integer "income_min"
+    t.integer "income_max"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "user_cities", force: :cascade do |t|
