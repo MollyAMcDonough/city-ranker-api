@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_13_200625) do
+ActiveRecord::Schema.define(version: 2022_05_31_000454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,7 @@ ActiveRecord::Schema.define(version: 2022_05_13_200625) do
 
   create_table "cities", force: :cascade do |t|
     t.string "city"
-    t.string "region"
-    t.string "country"
-    t.string "currency"
+    t.bigint "region_id", null: false
     t.decimal "latitude"
     t.decimal "longitude"
     t.integer "elevation_meters"
@@ -48,9 +46,20 @@ ActiveRecord::Schema.define(version: 2022_05_13_200625) do
     t.boolean "coastal"
   end
 
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.string "currency"
+    t.string "language"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "income_min"
+    t.integer "income_max"
+    t.float "tax_min"
+    t.float "tax_max"
+  end
+
   create_table "regions", force: :cascade do |t|
     t.string "name"
-    t.string "country"
     t.string "political_party"
     t.float "tax_min"
     t.float "tax_max"
@@ -58,6 +67,8 @@ ActiveRecord::Schema.define(version: 2022_05_13_200625) do
     t.integer "income_max"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "country_id", default: 1, null: false
+    t.index ["country_id"], name: "index_regions_on_country_id"
   end
 
   create_table "user_cities", force: :cascade do |t|
@@ -79,10 +90,15 @@ ActiveRecord::Schema.define(version: 2022_05_13_200625) do
     t.string "sub"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "city_id"
+    t.integer "salary"
+    t.index ["city_id"], name: "index_users_on_city_id"
   end
 
   add_foreign_key "categories", "users"
+  add_foreign_key "regions", "countries"
   add_foreign_key "user_cities", "categories"
   add_foreign_key "user_cities", "cities"
   add_foreign_key "user_cities", "users"
+  add_foreign_key "users", "cities"
 end

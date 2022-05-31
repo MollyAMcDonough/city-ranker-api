@@ -27,13 +27,32 @@ class CitiesController < ApplicationController
         if params.key?(:distance)
             @cities = @cities.filter {|city| city.within_rad(params[:latitude].to_f, params[:longitude].to_f, params[:distance].to_i)}
         end
+        if params.key?(:airport) && !@cities.empty?
+            # if params[:airport] == "P-L"
+            #     @cities = @cities.where(airport: "P-L")
+            # end
+            # elsif params
+            case params[:airport]
+            when "P-L"
+                @cities = @cities.filter{|city| city.airport == "P-L"}
+                # @cities = @cities.where(airport: "P-L")
+            when "P-M"
+                @cities = @cities.filter{|city| city.airport == "P-M" || city.airport == "P-L"}
+                # @cities = @cities.where(airport: "P-L").or(@cities.where(airport: "P-M"))
+            when "P-S"
+                @cities = @cities.filter{|city| city.airport && city.airport != "P-N"}
+            when "P-N"
+                @cities = @cities.filter{|city| city.airport}
+            end
+        end
+
         render json: @cities, lat_given: params[:latitude].to_f, long_given: params[:longitude].to_f, status: :ok
     end
 
     private
 
     def search_params
-        params.permit(:apt_price_per_meter2_inside_city_center, :apt_price_per_meter2_outside_city_center, :monthly_after_tax_salary, :monthly_internet,:monthly_rent_one_bdrm_inside_city_center, :monthly_rent_one_bdrm_outside_city_center, :monthly_utilities, :on_water, :population_max, :population_min)
+        params.permit(:apt_price_per_meter2_inside_city_center, :apt_price_per_meter2_outside_city_center, :monthly_after_tax_salary, :monthly_internet,:monthly_rent_one_bdrm_inside_city_center, :monthly_rent_one_bdrm_outside_city_center, :monthly_utilities, :coastal, :on_water, :population_max, :population_min)
     end
 
     def write_params

@@ -13,4 +13,10 @@ namespace :regions do
   Region.create!(name: "Wyoming", country: "United States of America", tax_min:	0, tax_max: 0, income_min: 0, income_max: 0, political_party: "Republican")
   end
 
+  task update_cities: :environment do
+    City.all.each do |city|
+      region = Region.find_by(name: city.region_id)
+      city.update!(region_id: region.id)
+    end
+  end
 end
