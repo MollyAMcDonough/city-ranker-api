@@ -17,13 +17,13 @@ class UserCitiesController < ApplicationController
     end
 
     def index
-        render json: get_user.user_cities, status: :ok
+        render json: get_user.user_cities, lat_given: 0, long_given: 0, status: :ok
     end
 
     def update
         user_city = UserCity.find(params[:id])
         user_city.update!(update_params)
-        render json: user_city, status: :ok
+        render json: user_city, lat_given: 0, long_given: 0,  status: :ok
     end
 
 
