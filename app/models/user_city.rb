@@ -5,4 +5,5 @@ class UserCity < ApplicationRecord
   belongs_to :user
   belongs_to :category
   belongs_to :city
+  delegate :region, to: :city
 end

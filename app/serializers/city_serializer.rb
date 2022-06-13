@@ -6,6 +6,7 @@ class CitySerializer < ActiveModel::Serializer
   def distance
     lat = @instance_options[:lat_given]
     long = @instance_options[:long_given]
+    # byebug
     object.get_distance_between_lat_lon(lat,long).round(2)
   end
 
