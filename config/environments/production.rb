@@ -6,6 +6,18 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 
+  ########################################################################
+  # youtube guide with rails 7
+
+  # if a default host is specifically defined then it's used otherwise the app is
+  # assumed to be a Heroku review app. Note that 'Hash#fetch' is used defensively
+  # so the app will blow up at boot-time if both 'DEFAULT_URL_HOST' aand
+  # 'HEROKU_APP_NAME' aren't defined.
+
+  host = ENV['DEFAULT_URL_HOST'] || "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+
+  ########################################################################
+
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
